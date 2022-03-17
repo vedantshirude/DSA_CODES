@@ -15,7 +15,7 @@ struct vector
 struct vector* create_vector(void);
 int push_back(struct vector*p_vec,int new_element);
 void destroy_vector(struct vector* p_vec);
-
+void pop_back(struct vector*p_vec);
 /*Auxillary function declaration*/
 void* xmalloc(size_t size_per_mem);
 
@@ -33,6 +33,10 @@ int main()
     for(int i=0;i<p_vec->size;i++)
         printf("p_vec->p_arr[%d] : %d\n",i,p_vec->p_arr[i]);
 
+    pop_back(p_vec);
+    printf("\n");
+    for(int i=0;i<p_vec->size;i++)
+        printf("p_vec->p_arr[%d] : %d\n",i,p_vec->p_arr[i]);
     destroy_vector(p_vec);
     p_vec=NULL;
     return 0;
@@ -50,6 +54,7 @@ int push_back(struct vector*p_vec,int new_element)
 {
     p_vec->size=p_vec->size+1;
     p_vec->p_arr=realloc(p_vec->p_arr,p_vec->size*sizeof(int));
+    
     p_vec->p_arr[p_vec->size-1]=new_element;
     return(SUCCESS);
 }
@@ -57,6 +62,11 @@ void destroy_vector(struct vector*p_vec)
 {
     free(p_vec->p_arr);
     free(p_vec);
+}
+void pop_back(struct vector*p_vec)
+{
+    p_vec->size=p_vec->size-1;
+    p_vec->p_arr=realloc(p_vec->p_arr,p_vec->size*sizeof(int));
 }
 /*Auxillary function definition*/
 void*xmalloc(size_t size_per_mem)
